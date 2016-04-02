@@ -7,8 +7,8 @@ if [ $# -ne 1 ]; then
 fi
 
 tag=$1
-
-tgt=$(mktemp -d)
+mkdir -p $tag
+tgt=$tag #$(mktemp -d)
 
 # Build flannel inside 
 docker run -v `pwd`/../:/opt/flannel -i -t golang:1.4.2 /bin/bash -c "cd /opt/flannel && ./build"
@@ -28,4 +28,4 @@ cp ./mk-docker-opts.sh $tgt
 docker build -t quay.io/coreos/flannel:${tag} $tgt
 
 # Cleanup
-rm -rf $tgt
+#rm -rf $tgt
